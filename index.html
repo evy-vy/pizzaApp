@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cours vue.js Linkedin</title>
+  <!-- CSS -->
+  <link rel="stylesheet" href="src/assets/style.css"/>
+</head>
+  <body>
+    <div id="app">
+      <div class="product-section">
+        <div class="product-image">
+          <img :src="image" alt="pizza1">
+        </div>
+      </div>
+      <div class="product-description">
+        <h1>{{ name }}</h1>
+        <!-- v-show permet de cacher une donnée selon une condition définie, il est moins couteux d'utiliser v-show si on a besoin de cacher régulièrement qqch-->
+        <p v-show ="notAvailable">Momentanément indisponible</p>
+        <!-- rendu conditionnel v-if v-else -->
+        <p v-if="sale">
+          <!-- <span class="sale">{{ price }}</span> -->
+          <span class="new-price">{{ price - 5 }}</span>
+        </p>
+        <p v-else>
+          <span class="price">{{ price }}</span>
+        </p>
+        <br>
+
+        <strong>Ingrédients</strong>
+        <div>
+          <!-- permet de boucler pour récuperer les ingrédients du tableau. elle répliquera la baslise autant de fois qu'il y a d'ingrédients.
+          
+          v-for prend un 2eme élément facultatif pour l'index des éléments généré par un tableau). pour les objets cet index sera le 3eme argument.
+          on place cette index et on le réutilise dans l'attribut key
+          -->
+          <span v-for = "(ingredient, index) in ingredients" :key='index'>{{ ingredient + ', ' }}</span>
+        </div>
+        <br>
+
+        <div class="sauces">
+          <strong>Sauce de choix
+            <ul>
+              <!-- key (attribut unique) permet de suivre l'identité de chaque noeud créé et ainsi pouvoir réutiliser et réorganiser les éléments existant. 
+
+                ici dans le tableau objet, on utilisera l'id des éléments. 
+                l'attribut key donne a chaque élément un clé unique afin que vue puisse saisir l'élément et ne pas le perdre à mesure que les choses se mettent à jour dans l'appli.
+
+                Il est recommandé de fournir un attribut key a v-for dans la mesure du possible à moins que le contenu itéré ne soint simple ou que l'on préfère nous fier intentionnellement au comportement par défaut pour des gains de performance. Dans ce type de cas on peut s'en passer.
+              -->
+              <li v-for = 'sauce in sauces' :key='sauce.id'>{{ sauce.type }}</li>
+            </ul>
+          </strong>
+        </div>
+
+        <div>
+          <strong>Valeurs nutritionnelles pour 100 grammes</strong>
+            <ul>
+              <!-- la boucle me renvoi le nom et la valeur de chaque éléments contenu dans l'objet energy -->
+              <li v-for = '(name, value, index) in energy' :key='index'>{{ name }} : {{ value }}
+              </li>
+            </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- JS -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="/main.js"></script>
+    <script>
+    const mountApp = app.mount('#app');
+    </script>
+  </body>
+</html>
